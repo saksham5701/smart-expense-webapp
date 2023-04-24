@@ -1,0 +1,14 @@
+{
+  "name": "smart-expense",
+  "version": "1.0.0",
+  "description": "It is an exciting app that helps you keep track of your expenses",
+  "main": "server.js",
+  "scripts": {
+    
+    "start": "node server.js",
+    "server":"nodemon server.js"
+  },
+  "keywords": [], 
+  "author": "",
+  "license": "MIT"
+}
