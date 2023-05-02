@@ -3,7 +3,7 @@ const userModel=require('../models/userModel');
 
 
 //login callback
-const loginController=async ()=>{
+const loginController=async (req,res)=>{
     try {
         const {email,password}=req.body;
         const user=await userModel.findOne({email,password});
@@ -27,7 +27,7 @@ const loginController=async ()=>{
 };
 
 //register callback
-const registerController= async ()=>{
+const registerController= async (req,res)=>{
     try {
         const newUser=new userModel(req.body);
         await newUser.save();

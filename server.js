@@ -24,11 +24,15 @@ app.use(cors());
 const PORT=8080 || process.env.PORT;
 
 //to show someting on base url
-app.get('/',(req,res)=>{
+// app.get('/',(req,res)=>{
 
-res.send('<h1>Hello I welcome you to the home page or root page of Smart expense sing send</h1>')
-// res.write('<h1>Hello I welcome you to the home page or root page of Smart expense</h1>')
-});
+// res.send('<h1>Hello I welcome you to the home page or root page of Smart expense sing send</h1>')
+// // res.write('<h1>Hello I welcome you to the home page or root page of Smart expense</h1>')
+// });
+
+
+//importing userRoute kyunki user related hai.Saare routes user related hai
+app.use("/api/v1/users",require("./routes/userRoute"));
 
 //listen to the server
 
