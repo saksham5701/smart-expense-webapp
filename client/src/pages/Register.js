@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import {Form,Input,message} from 'antd';
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +19,14 @@ const Register = () => {
       message.error("Something went wrong");
      }
   };
+
+  //Prevent for register if already logged in
+  useEffect(()=>{
+    if(localStorage.getItem('user'))
+    {
+      navigate('/');
+    }
+  },[navigate]);
   return (
     <>
     <div className="register-page">
