@@ -1,22 +1,88 @@
-import React,{useState} from 'react';
-import {  Form, Input,  Modal, Select } from 'antd';
-import Layout from '../components/Layout/Layout'
-
+import React,{useState,useEffect} from 'react';
+import {  Form, Input,  Modal, Select, Table, message } from 'antd';
+import Layout from '../components/Layout/Layout';
+import Spinner from '../components/Layout/Spinner';
+import axios from 'axios';
 const HomePage = () => {
   const [showModal,setShowModal]=useState(false);
-  const handleSubmit=(values) => {
-    console.log(values);
+  const [loading,setloading]=useState(false);
+  const [allTransection,setAllTransection]=useState([]);
+
+  //table data
+  const columns=[
+    {
+      title:'Date',
+      dataIndex:'date'
+    },
+    {
+      title:'Amount',
+      dataIndex:'amount'
+    },
+    
+    {
+      title:'Type',
+      dataIndex:'type'
+    },
+    {
+      title:'Category',
+      dataIndex:'category'
+    },
+    {
+      title:'Refrence',
+      dataIndex:'refrence'
+    },
+    {
+      title:'Actions',
+      
+    },
+  ];
+
+  //getall transections
+  const getAllTransections=async ()=>{
+    try {
+      const user=JSON.parse(localStorage.getItem('user'));
+      setloading(true);
+      const res=await axios.post('/transections/get-transections',{userid:user._id})
+      setloading(false)
+      setAllTransection(res.data) 
+      console.log(res.data)
+      
+    } catch (error) {
+      console.log(error);
+      message.error('Fetch issues with transection');
+    }
+  };
+  useEffect(()=>{
+    getAllTransections();
+  },[]);
+  const handleSubmit=async(values) => {
+    try{
+      const user=JSON.parse(localStorage.getItem('user'))
+      setloading(true);
+      await axios.post('/transections/add-transection',{...values,userid:user._id})
+      setloading(false)
+      message.success('Transection Added Succesfully');
+      setShowModal(false);
+    }catch(error)
+    {
+      setloading(false)
+      message.error('Failed to add transection')
+    }
+    
   }
   return (
     <Layout>  
     {/* //Using component as a Html element */}
+    {loading && <Spinner/>}
         <div className="filters">
           <div>range filters</div>
           <div>
             <button className="btn btn-primary" onClick={()=>setShowModal(true)}> Add new</button>
           </div>
         </div>
-        <div className="content"></div>
+        <div className="content">
+          <Table columns={columns}   dataSource={allTransection}/>
+        </div>
         <Modal
         title="Add transaction"
         open={showModal}
@@ -49,7 +115,7 @@ const HomePage = () => {
       <Form.Item label="Date" name="date">
         <Input type="date"/>
       </Form.Item>
-      <Form.Item label="Reference" name="reference">
+      <Form.Item label="Refrence" name="refrence">
         <Input type="text"/>
       </Form.Item>
       <Form.Item label="Description" name="description">

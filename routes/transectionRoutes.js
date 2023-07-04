@@ -1,5 +1,5 @@
 const express=require('express')
-const { addTransection } = require('../controllers/transectionCtrl');
+const { addTransection, getAllTransection } = require('../controllers/transectionCtrl');
 
 
 
@@ -13,7 +13,7 @@ const router=express.Router();
 router.post('/add-transection',addTransection);
 
 //get transections
-router.post('/get-transections',getAllTransections);
+router.post('/get-transections',getAllTransection);
 
 
 module.exports=router;
