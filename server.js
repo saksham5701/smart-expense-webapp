@@ -33,7 +33,8 @@ const PORT=8080 || process.env.PORT;
 
 //importing userRoute kyunki user related hai.Saare routes user related hai
 app.use("/api/v1/users",require("./routes/userRoute"));
-
+//importing userRoute kyunki user related hai.Saare routes user related hai
+app.use("/api/v1/transections",require("./routes/transectionRoutes"));
 //listen to the server
 
 app.listen(PORT,()=>{
